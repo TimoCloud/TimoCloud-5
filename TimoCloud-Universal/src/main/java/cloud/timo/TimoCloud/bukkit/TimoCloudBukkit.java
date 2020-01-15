@@ -44,6 +44,7 @@ public class TimoCloudBukkit extends JavaPlugin {
     private BukkitStringHandler stringHandler;
     private SignManager signManager;
     private StateByEventManager stateByEventManager;
+    private boolean disabling;
     private String prefix = "[TimoCloud] ";
 
     public void info(String message) {
@@ -64,6 +65,7 @@ public class TimoCloudBukkit extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.disabling = false;
         try {
             info("&eEnabling &bTimoCloudBukkit&r &eversion &7[&6" + getDescription().getVersion() + "&7]&e...");
             makeInstances();
@@ -86,6 +88,7 @@ public class TimoCloudBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.disabling = true;
         info("&chas been disabled!");
     }
 
@@ -210,6 +213,7 @@ public class TimoCloudBukkit extends JavaPlugin {
     }
 
     private void doEverySecond() {
+        if (this.disabling) return;
         sendEverything();
         requestApiData();
     }
@@ -268,6 +272,9 @@ public class TimoCloudBukkit extends JavaPlugin {
         }
     }
 
+    /**
+     * Must be called asynchronously
+     */
     public void sendPlayers() {
         getSocketMessageManager().sendMessage(Message.create().setType("SET_PLAYERS").setData(getOnlinePlayersAmount() + "/" + getMaxPlayersAmount()));
     }

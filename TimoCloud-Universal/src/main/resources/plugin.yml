@@ -2,7 +2,7 @@ name: TimoCloud
 version: ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}
 author: TimoCrafter
 main: cloud.timo.TimoCloud.bukkit.TimoCloudBukkit
-api-version: 1.13
+api-version: 1.15
 softdepend: [Multiverse-Core]
 commands:
   timocloudbukkit:
