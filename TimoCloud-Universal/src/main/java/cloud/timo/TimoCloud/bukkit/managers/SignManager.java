@@ -276,7 +276,11 @@ public class SignManager {
     }
 
     private Block getSignBlockAttached(Block signBlock) {
-        if (!signBlock.getType().equals(Material.LEGACY_WALL_SIGN)) return null;
+        if (TimoCloudBukkit.getInstance().isVersion113OrAbove()) {
+            if (!signBlock.getType().equals(Material.LEGACY_WALL_SIGN)) return null;
+            return signBlock.getRelative(((org.bukkit.material.Sign) signBlock.getState().getData()).getAttachedFace());
+        }
+        if (!signBlock.getType().equals(Material.valueOf("WALL_SIGN"))) return null;
         return signBlock.getRelative(((org.bukkit.material.Sign) signBlock.getState().getData()).getAttachedFace());
     }
 
